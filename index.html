@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gặp Mặt Liên Hoan - Công An Phường Phương Liệt</title>
+<style type="text/css">
+    /* ========================================================
+       1. CSS VARIABLES - THAY ĐỔI THEO TÔNG VÀNG KEM & ĐỎ ĐÔ
+       ======================================================== */
+    :root {
+        --bg-color-center: #fffbeb; /* Vàng kem sáng ở tâm */
+        --bg-color-mid: #fef08a;    /* Vàng nhạt */
+        --bg-color-edge: #fde047;   /* Vàng đồng ở rìa */
+        
+        --text-red-main: #cc0000;   /* Đỏ tươi cho tiêu đề chính */
+        --text-red-sub: #800000;    /* Đỏ đô trầm cho nội dung phụ */
+        
+        --gradient-red-main: linear-gradient(to bottom, #e11d48 0%, #cc0000 50%, #7f1d1d 100%);
+        --gradient-red-sub: linear-gradient(to bottom, #991b1b 0%, #7f1d1d 100%);
+    }
+
+    /* ========================================================
+       2. THIẾT LẬP HỆ THỐNG GIAO DIỆN MÀN HÌNH CHUNG
+       ======================================================== */
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden; 
+        background: radial-gradient(circle at center, var(--bg-color-center) 0%, var(--bg-color-mid) 60%, var(--bg-color-edge) 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* ĐỔI TOÀN BỘ FONT CHỮ THÀNH TIMES NEW ROMAN */
+        font-family: 'Times New Roman', Times, serif;
+        color: var(--text-red-sub); 
+        user-select: none;
+    }
+
+    /* Khung LED tỷ lệ chuẩn 16:9 áp dụng công nghệ CSS hiện đại */
+    .container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        max-width: 177.78vh; 
+        max-height: 56.25vw; 
+        aspect-ratio: 16 / 9;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    /* ========================================================
+       3. LỚP NỀN VÀ TRANG TRÍ (Z-INDEX: 1 & 2)
+       ======================================================== */
+    .drum-rotating {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vmax; 
+        height: 100vmax;
+        background-image: url('trong_dong.png'); 
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        
+        /* CẢI TIẾN: Làm trống đồng tối màu đi và tăng độ tương phản để nhìn rõ trên nền sáng */
+        opacity: 0.4; 
+        filter: brightness(0.5) contrast(1.5); 
+        
+        z-index: 1;
+        will-change: transform; 
+        animation: spin 90s linear infinite; 
+    }
+
+    @keyframes spin {
+        from { transform: translate(-50%, -50%) rotate(0deg); }
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .decor-layer {
+        position: absolute;
+        inset: 0; 
+        z-index: 2;
+        pointer-events: none;
+    }
+    .decor-layer img {
+        position: absolute;
+        bottom: 0%; 
+        width: 32%; 
+        height: auto;
+    }
+    .lotus-left { left: 0%; }
+    .lotus-right { right: 0%; }
+
+    /* ========================================================
+       4. LỚP NỘI DUNG VĂN BẢN (Z-INDEX: 3 - CHỮ ĐÈ TRÊN HOA)
+       ======================================================== */
+    .content-layer {
+        position: absolute;
+        inset: 0;
+        z-index: 3; 
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 2% 6% 3% 6%; 
+        box-sizing: border-box;
+    }
+
+    /* --- PHẦN HEADER: LOGO & TÊN CƠ QUAN --- */
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 0; 
+    }
+
+    .police-badge {
+        width: 11vw; 
+        height: auto;
+        margin-right: 2vw; 
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15)); 
+    }
+
+    .unit-header {
+        text-align: center; 
+    }
+    .unit-header h2, .unit-header h3 {
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        color: var(--text-red-main); 
+        text-shadow: 0 1px 2px rgba(255,255,255,0.8); 
+    }
+    .unit-header h2 { font-size: 2.2vw; }
+    .unit-header h3 { font-size: 2.0vw; margin-top: 0.3vw; } 
+
+    /* --- PHẦN MAIN: NỘI DUNG CHÍNH SỰ KIỆN --- */
+    main {
+        text-align: center;
+        margin: 10% 0 auto 0; 
+    }
+   main h1 {
+    margin: 0;
+    font-size: 5vw; 
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-red-main); 
+    background: var(--gradient-red-main);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: brightness(1.2) contrast(1.1)
+            drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2))
+            drop-shadow(0 0 2px rgba(255, 255, 255, 0.9));
+}
+   main p {
+    margin: 2% 0 0 0;
+    font-size: 3.5vw;
+    font-weight: bold;
+    text-transform: none; 
+    font-style: italic; 
+    letter-spacing: 0.5px;
+    color: var(--text-red-sub);
+    background: var(--gradient-red-sub);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: brightness(1.3) contrast(1.1)
+            drop-shadow(0 1px 2px rgba(0,0,0,0.2))
+            drop-shadow(0 0 2px rgba(255,255,255,0.9));
+}
+    /* --- PHẦN FOOTER: THỜI GIAN ĐỊA ĐIỂM --- */
+    footer {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 1%;
+    }
+    footer p {
+        margin: 0;
+        font-size: 2.5vw;
+        font-style: italic;
+        color: var(--text-red-sub);
+        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+
+    /* ========================================================
+       5. HIỆU ỨNG CÁNH HOA SEN RƠI CHÉO NHỆ NHÀNG (Z-INDEX: 2)
+       ======================================================== */
+    #rose-container {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 2; 
+    }
+
+    .petal {
+        position: absolute;
+        user-select: none;
+        pointer-events: none;
+        animation: fallDiagonal linear infinite;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.08));
+        border-radius: 50% 0 50% 50%;
+        background: radial-gradient(circle at 30% 30%, #fbcfe8 0%, #f472b6 60%, #db2777 100%);
+    }
+
+    @keyframes fallDiagonal {
+        0% {
+            transform: translate(0, -10vh) rotate(0deg) rotateY(0deg);
+            opacity: 0;
+        }
+        10% { opacity: 0.6; }
+        90% { opacity: 0.6; }
+        100% {
+            transform: translate(35vw, 105vh) rotate(450deg) rotateY(180deg);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="rose-container"></div>
+        
+        <div class="drum-rotating"></div>
+
+        <div class="decor-layer">
+            <img class="lotus-left" src="hoa_sen_trai.png" alt="Hoa sen góc trái">
+            <img class="lotus-right" src="hoa_sen_phai.png" alt="Hoa sen góc phải">
+        </div>
+
+        <div class="content-layer">
+            
+            <header>
+                <img class="police-badge" src="cong_an_hieu.png" alt="Công an hiệu">
+                <div class="unit-header">
+                    <h2>Công an Thành phố Hà Nội</h2>
+                    <h2>Công an phường Phương Liệt</h2>
+                </div>
+            </header>
+
+            <main>
+                <h1><a href="lienhoancanhhoa.html" style="text-decoration: none;">Gặp mặt liên hoan</a></h1>
+                <p>Chúc mừng các Đồng chí nâng lương, thăng cấp bậc hàm năm 2026</p>
+            </main>
+
+            <footer>
+                <p>Phương Liệt, ngày 05 tháng 06 năm 2026</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        function createPetal() {
+            const container = document.getElementById('rose-container');
+            if(!container) return;
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            const size = Math.random() * 15 + 10; 
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.top = `-5vh`;
+            
+            const duration = Math.random() * 5 + 6; 
+            petal.style.animationDuration = `${duration}s`;
+            
+            container.appendChild(petal);
+            
+            setTimeout(() => {
+                petal.remove();
+            }, duration * 1000);
+        }
+        setInterval(createPetal, 500);
+    </script>
+</body>
+</html>
